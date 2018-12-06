@@ -1,36 +1,49 @@
 var React = require('react')
 var ReactDOM = require('react-dom')
 
-
 //Create component
 var TodoComponent = React.createClass({
     getInitialState: function(){
         return{
-            todos: ['sport','sleep','code'],
+            todos: ['sport','sleep','code','eat'],
             age: 22
-        }
+        } 
     },
     render: function(){
-        var ager = setTimeout(function(){
-            this.setState({
-                age: 23
-            })
-        }.bind(this),5000);
+        var todos = this.state.todos;
+        todos = todos.map(function(item, index){
+            return(
+                <TodoItem item = {item} key={index}/>
+            );
+        }.bind(this));
         return(
             <div id="todo-list">
-                <p>my age: {this.state.age}</p>
-                <p>my todos</p>
+                <p onClick={this.clicked}>smth</p>
                 <ul>
-                    <li>{this.state.todos[0]}</li>
-                    <li>{this.state.todos[1]}</li>
-                    <li>{this.state.todos[2]}</li>
+                    {todos}
                 </ul>
             </div>
         );
+    }, //render
+    
+    //Custom functions
+    clicked:function(){
+        console.log('getting better at this');
     }
 });
 
-var pets = {name:'rosa', age: 4};
+//Create TodoItem Component
+var TodoItem = React.createClass({
+    render: function(){
+        return(
+            <li>
+                <div className="todo-item">
+                    <span className="item-name">{this.props.item}</span>
+                </div>
+            </li>
+        );
+    }
+})
 
 //put component into html page
-ReactDOM.render(<TodoComponent msg="smth" pet={pets}/>, document.getElementById("todo-wrapper"));
+ReactDOM.render(<TodoComponent/>, document.getElementById("todo-wrapper"));
